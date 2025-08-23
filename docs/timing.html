@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Timer Example</title>
+    </head>
+    <body>
+        <div class="container">
+            <input id="btn" type="button" value="STOP TIMER" />
+            <div id="clock"></div>
+            <div id="fizzbuzz"></div>
+        </div>
+        <script>
+            function say(seconds) {
+                let fb = document.querySelector("#fizzbuzz");
+                // if the fz element contains a child element, then remove it
+                if (fb.firstChild) {
+                    fb.removeChild(fb.firstChild);
+                }
+                if (seconds % 3 === 0 && seconds % 5 === 0) {
+                    // add a child element to the fz element
+                    let span = document.createElement("span");
+                    span.textContent = "FizzBuzz";
+                    fb.appendChild(span);
+                } else if (seconds % 5 === 0) {
+                    let span = document.createElement("span");
+                    span.textContent = "Buzz";
+                    fb.appendChild(span);
+                } else if (seconds % 3 === 0) {
+                    let span = document.createElement("span");
+                    span.textContent = "Fizz";
+                    fb.appendChild(span);
+                } else {
+                    let span = document.createElement("span");
+                    span.textContent = seconds;
+                    fb.appendChild(span);
+                }
+            }
+            let clock = document.querySelector("#clock");
+            let timer = window.setInterval(
+                function () {
+                    let currentTime = new Date();
+                    clock.textContent = currentTime.toLocaleTimeString();
+                    say(currentTime.getSeconds())
+                }, 1000
+            );
+            document.querySelector("#btn").onclick = function () {
+                window.clearInterval(timer);
+            };
+        </script>
+    </body>
+</html>

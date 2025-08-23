@@ -1,6 +1,8 @@
 ext {
     KS10_3_0 = "/Applications/Katalon Studio.app/Contents/Eclipse"
     KS10_3_1 = "/Applications/Katalon Studio Enterprise.app/Contents/Eclipse"
+    SOURCE_KS10_3_0 = "/Users/kazuakiurayama/katalon-workspace/katalon-studio-source/10.3.0"
+    SOURCE_KS10_3_1 = "/Users/kazuakiurayama/katalon-workspace/katalon-studio-source/10.3.1"
     OUT10_3_0 = projectDir.toString() + "/docs/sources/10_3_0"
     OUT10_3_1 = projectDir.toString() + "/docs/sources/10_3_1"
 }
@@ -15,6 +17,12 @@ tasks.register("copyJS10_3_1", Copy) {
     from("${KS10_3_1}")
     into("${OUT10_3_1}/")
     include("configuration/resources/extensions/Chrome/Smart Wait/content/wait.js")
+}
+
+tasks.register("copyJava10_3_0", Copy) {
+    from("${KS10_3_0}")
+    into("${OUT10_3_0}/")
+    include("plugins/com.kms.katalon.core/src/com/kms/katalon/core/webui/keyword/builtin/WaitForElementPresentKeyword.java")
 }
 
 tasks.register("copySources") {
