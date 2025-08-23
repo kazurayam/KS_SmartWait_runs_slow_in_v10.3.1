@@ -22,18 +22,25 @@
                     // add a child element to the fz element
                     let span = document.createElement("span");
                     span.textContent = "FizzBuzz";
+                    span.style.fontSize = "2em"
+                    span.style.backgroundColor = "lime";
                     fb.appendChild(span);
                 } else if (seconds % 5 === 0) {
                     let span = document.createElement("span");
                     span.textContent = "Buzz";
+                    span.style.fontSize = "2em"
+                    span.style.backgroundColor = "aqua";
                     fb.appendChild(span);
                 } else if (seconds % 3 === 0) {
                     let span = document.createElement("span");
                     span.textContent = "Fizz";
+                    span.style.fontSize = "2em"
+                    span.style.backgroundColor = "yellow";
                     fb.appendChild(span);
                 } else {
                     let span = document.createElement("span");
                     span.textContent = seconds;
+                    span.style.fontSize = "2em"
                     fb.appendChild(span);
                 }
             }
