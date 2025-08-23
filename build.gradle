@@ -1,0 +1,22 @@
+ext {
+    KS10_3_0 = "/Applications/Katalon Studio.app/Contents/Eclipse"
+    KS10_3_1 = "/Applications/Katalon Studio Enterprise.app/Contents/Eclipse"
+    OUT10_3_0 = projectDir.toString() + "/docs/sources/10_3_0"
+    OUT10_3_1 = projectDir.toString() + "/docs/sources/10_3_1"
+}
+
+tasks.register("copyJS10_3_0", Copy) {
+    from("${KS10_3_0}")
+    into("${OUT10_3_0}/")
+    include("configuration/resources/extensions/Chrome/Smart Wait/content/wait.js")
+}
+
+tasks.register("copyJS10_3_1", Copy) {
+    from("${KS10_3_1}")
+    into("${OUT10_3_1}/")
+    include("configuration/resources/extensions/Chrome/Smart Wait/content/wait.js")
+}
+
+tasks.register("copySources") {
+    dependsOn("copyJS10_3_0", "copyJS10_3_1")
+}
