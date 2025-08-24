@@ -19,6 +19,7 @@ tasks.register("copyJS10_3_1", Copy) {
     include("configuration/resources/extensions/Chrome/Smart Wait/content/wait.js")
 }
 
+
 tasks.register("copyJava10_3_0", Copy) {
     from("${KS10_3_0}")
     into("${OUT10_3_0}/")
