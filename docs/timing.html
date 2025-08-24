@@ -7,9 +7,8 @@
     </head>
     <body>
         <div class="container">
-            <input id="btn" type="button" value="STOP TIMER" />
-            <div id="clock"></div>
             <div id="fizzbuzz"></div>
+            <input id="btn" type="button" value="STOP TIMER" />
         </div>
         <script>
             function appendFbText(fb, text, color) {
@@ -20,30 +19,27 @@
                 span.style.backgroundColor = color;
                 fb.appendChild(span);
             }
-            function say(seconds) {
+            function say(counter) {
                 let fb = document.querySelector("#fizzbuzz");
                 // if the fz element contains a child element, then remove it
                 if (fb.firstChild) {
                     fb.removeChild(fb.firstChild);
                 }
-                if (seconds % 9 === 0 && seconds % 5 === 0) {
-                    appendFbText(fb, "FizzFizzBuzz", "magenta");
-                } else if (seconds % 3 === 0 && seconds % 5 === 0) {
+                if (counter % 3 === 0 && counter % 5 === 0) {
                     appendFbText(fb, "FizzBuzz", "lime");
-                } else if (seconds % 5 === 0) {
+                } else if (counter % 5 === 0) {
                     appendFbText(fb, "Buzz", "aqua");
-                } else if (seconds % 3 === 0) {
+                } else if (counter % 3 === 0) {
                     appendFbText(fb, "Fizz", "yellow");
                 } else {
-                    appendFbText(fb, seconds, "white");
+                    appendFbText(fb, counter, "white");
                 }
             }
-            let clock = document.querySelector("#clock");
+            let counter = 0;
             let timer = window.setInterval(
                 function () {
-                    let currentTime = new Date();
-                    clock.textContent = currentTime.toLocaleTimeString();
-                    say(currentTime.getSeconds())
+                    counter++;
+                    say(counter)
                 }, 1000
             );
             document.querySelector("#btn").onclick = function () {

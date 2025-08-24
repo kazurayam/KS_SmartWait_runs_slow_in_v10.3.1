@@ -1,2 +1,6 @@
 .gradle/
 build/
+
+docs/sources/
+
+.vscode
