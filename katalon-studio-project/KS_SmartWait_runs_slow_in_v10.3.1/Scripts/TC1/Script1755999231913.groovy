@@ -16,7 +16,7 @@ WebUI.navigateToUrl(url)
 
 WebUI.waitForElementPresent(makeTestObject("fizzbuzz", "//*/div[contains(.,'FizzBuzz')]"), 20)
 
-WebUI.click(makeTestObject("STOP BUTTON", "#btn"))
-
+WebUI.click(makeTestObject("STOP BUTTON", "//*/input[@id='btn']"))
 WebUI.delay(1)
+
 WebUI.closeBrowser()
