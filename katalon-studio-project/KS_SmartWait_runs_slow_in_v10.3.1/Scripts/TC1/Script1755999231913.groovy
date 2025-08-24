@@ -11,16 +11,25 @@ import com.kms.katalon.core.testcase.TestCase as TestCase
 import com.kms.katalon.core.testdata.TestData as TestData
 import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
 import com.kms.katalon.core.testobject.TestObject as TestObject
+import com.kms.katalon.core.testobject.ConditionType 
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
+TestObject makeTestObject(String id, String xpath) {
+	TestObject tObj = new TestObject(id)
+	tObj.addProperty("xpath", ConditionType.EQUALS, xpath)
+	return tObj	
+}
+
 String url = "https://kazurayam.github.io/KS_SmartWait_runs_slow_in_v10.3.1/timing.html"
 
 WebUI.openBrowser("")
 WebUI.setViewPortSize(800, 600)
 WebUI.navigateToUrl(url)
-WebUI.delay(3)
+
+WebUI.waitForElementPresent(makeTestObject("FizzBuzz", "//*/div[contains(.,'FizzBuzz')]"), 100)
+
 WebUI.closeBrowser()

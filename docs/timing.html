@@ -12,11 +12,30 @@
             <div id="fizzbuzz"></div>
         </div>
         <script>
+            function appendFbText(fb, text, color) {
+                // add a child element to the fz element
+                let span = document.createElement("span");
+                span.textContent = text;
+                span.style.fontSize = "2em"
+                span.style.backgroundColor = color;
+                fb.appendChild(span);
+            }
             function say(seconds) {
                 let fb = document.querySelector("#fizzbuzz");
                 // if the fz element contains a child element, then remove it
                 if (fb.firstChild) {
                     fb.removeChild(fb.firstChild);
+                }
+                if (seconds % 9 === 0 && seconds % 5 === 0) {
+                    appendFbText(fb, "FizzFizzBuzz", "magenta");
+                } else if (seconds % 3 === 0 && seconds % 5 === 0) {
+                    appendFbText(fb, "FizzBuzz", "lime");
+                } else if (seconds % 5 === 0) {
+                    appendFbText(fb, "Buzz", "aqua");
+                } else if (seconds % 3 === 0) {
+                    appendFbText(fb, "Fizz", "yellow");
+                } else {
+                    appendFbText(fb, seconds, "white");
                 }
                 if (seconds % 3 === 0 && seconds % 5 === 0) {
                     // add a child element to the fz element
