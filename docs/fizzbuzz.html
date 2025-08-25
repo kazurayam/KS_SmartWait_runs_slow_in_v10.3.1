@@ -3,12 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Timer Example</title>
+        <title>What use of Smart Wait?</title>
     </head>
     <body>
         <div class="container">
             <div id="fizzbuzz"></div>
-            <input id="btn" type="button" value="STOP TIMER" />
+
         </div>
         <script>
             function appendFbText(fb, text, color) {
@@ -40,11 +40,19 @@
                 function () {
                     counter++;
                     say(counter)
+                    if (counter === 15) {
+                        // insert a button element after the fz element
+                        let btn = document.createElement("button");
+                        btn.id = "btn";
+                        btn.textContent = "Stop";
+                        document.querySelector(".container").appendChild(btn);
+                        btn.onclick = function () {
+                            console.log("Stop button clicked");
+                            window.clearInterval(timer);
+                        };
+                    }
                 }, 1000
             );
-            document.querySelector("#btn").onclick = function () {
-                window.clearInterval(timer);
-            };
         </script>
     </body>
 </html>

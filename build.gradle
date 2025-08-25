@@ -1,3 +1,7 @@
+plugins {
+    id("com.kazurayam.compare-directories") version "0.2.3"
+}
+
 ext {
     KS10_3_0 = "/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources"
     KS10_3_1 = "/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources"
@@ -7,52 +11,60 @@ ext {
     OUT10_3_1 = projectDir.toString() + "/docs/sources/10.3.1"
 }
 
+tasks.register("copySources") {
+    dependsOn("cleanSources", "copyExt10_3_0", "copyExt10_3_1", "copySource10_3_0", "copySource10_3_1")
+}
+
 tasks.register("cleanSources") {
     doLast {
         delete fileTree(dir: OUT10_3_0)
         delete fileTree(dir: OUT10_3_1)
+        delete OUT10_3_0
+        delete OUT10_3_1
     }
 }
 
-def jsCopySpec = project.copySpec {
-    include([
-        "extensions/Chrome/Smart Wait/content/wait.js"
-        ])
-}
+def extIncludes = ["extensions/Chrome/Smart Wait/content/wait.js"]
 
-tasks.register("copyJS10_3_0", Copy) {
+tasks.register("copyExt10_3_0", Copy) {
     from("${KS10_3_0}")
     into("${OUT10_3_0}")
-    with jsCopySpec
+    include(extIncludes)
 }
 
-tasks.register("copyJS10_3_1", Copy) {
+tasks.register("copyExt10_3_1", Copy) {
     from("${KS10_3_1}")
     into("${OUT10_3_1}")
-    with jsCopySpec
+    include extIncludes
 }
 
-def sourceSpec = project.copySpec {
-    include ([
-        "com.kms.katalon.core.webui/com/kms/katalon/core/webui/common/internal/SmartWait.java",
-        "com.kms.katalon.core.webui/com/kms/katalon/core/webui/driver/KatalonSmartEventListener.java"
-        ])
-}
+def sourceIncludes = [
+    "com.kms.katalon.core.webui/com/kms/katalon/core/webui/common/internal/SmartWait.java",
+    "com.kms.katalon.core.webui/com/kms/katalon/core/webui/driver/KatalonSmartEventListener.java"
+    ]
+
 
 tasks.register("copySource10_3_0", Copy) {
     from("${SOURCE10_3_0}")
     into("${OUT10_3_0}/source")
-    with sourceSpec
+    include sourceIncludes
 }
 
 tasks.register("copySource10_3_1", Copy) {
     from("${SOURCE10_3_1}")
     into("${OUT10_3_1}/source")
-    with sourceSpec
+    include sourceIncludes
 }
 
-tasks.register("copySources") {
-    dependsOn("cleanSources",
-        "copyJS10_3_0", "copyJS10_3_1",
-        "copySource10_3_0", "copySource10_3_1")
+tasks.register("compareSources", com.kazurayam.dircomp.CompareDirectoriesTask) {
+    dirA = fileTree(layout.projectDirectory.dir("docs/sources/10.3.0"))
+    dirB = fileTree(layout.projectDirectory.dir("docs/sources/10.3.1"))
+    outputFile = layout.projectDirectory.file("docs/sources/differences.json")
+    diffDir = layout.projectDirectory.dir("docs/sources/diff")
+    doFirst {
+        delete layout.projectDirectory.dir("docs/sources/diff")
+    }
+    doLast {
+        println "output at " + layout.buildDirectory.dir("docs/sources").get()
+    }
 }
